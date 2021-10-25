@@ -1,30 +1,76 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+   <div class="app">
+      <post-form />
+      <post-list v-bind:posts="posts" />
+   </div>
 </template>
 
+<script>
+   import PostForm from '@/components/PostForm'
+   import PostList from '@/components/PostList'
+
+
+   export default {
+      components: {
+         PostList,
+         PostForm
+      },
+      data() {
+         return {
+            posts: [
+               {
+                  id: Date.now(),
+                  title: 'js',
+                  body: 'body',
+               },
+               {
+                  id: Date.now(),
+                  title: 'ts',
+                  body: 'body',
+               },
+               {
+                  id: Date.now(),
+                  title: 'angular',
+                  body: 'body',
+               },
+            ],
+            title: '',
+            body: '',
+         }
+      },
+      methods: {
+         addLike() {
+            this.likes += 1
+         },
+         deleteLike() {
+            this.likes -= 1
+         },
+         createPost() {
+            const createPost = {
+               id: Date.now(),
+               title: this.title,
+               body: this.body
+            }
+            this.posts.push(createPost)
+         },
+         inputTitle(event) {
+            console.log(event)
+            this.title = event.target.value
+         }
+      }
+   }
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+   * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+   }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+   .app {
+      padding: 20px;
+      max-width: 500px;
+      margin: 0 auto;
+   }
 </style>
